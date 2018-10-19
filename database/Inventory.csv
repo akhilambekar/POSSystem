@@ -1,0 +1,13 @@
+ProductId,ProductName,ProductCount,ProductPrice,ProductSupplier
+1345,Hairspray,800,34,CosmeticSellers
+2456,Shampoo,674,12.34,CosmeticSellers
+8473,Tshirt,675,54.22,ClothingSellers
+5321,Cereals,676,12.11,FoodSellers
+9853,Umbrella,700,11.9,ClothingSellers
+8845,Toaster,898,66.5,ElectronicSellers
+3245,Ramen,679,4.3,FoodSellers
+9911,Handbag,680,66.3,ClothingSellers
+6380,Deodrant,681,26.3,CosmeticSellers
+2990,Jeans,500,21.99,ClothingSellers
+9919,SmartWatch,677,660,ElectronicSellers
+9811,Keyboard,632,14,ElectronicSellers
