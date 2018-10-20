@@ -1,5 +1,4 @@
 
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,6 +16,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +42,6 @@ public class SaleGUI {
 	private static String USER;
 	private static String LOGINTIME;
 	private static String REGISTER;
-
 	/**
 	 * Launch the application.
 	 */
@@ -61,15 +60,12 @@ public class SaleGUI {
 			}
 		});
 	}
-
 	/**
 	 * Create the application.
 	 */
 	public SaleGUI() {
 		initialize();
 	}
-	
-
 	
 
 	//Function to validate the Quantity of the product
@@ -89,8 +85,8 @@ public class SaleGUI {
 				//saleArea.setText(item+"   " + finalPrice     +"    "+Quantity);
 				List<Object> values = new ArrayList<Object>();
 				  values.add(Quantity);
-				  values.add(productPrice);
-				  values.add(finalPrice);
+				  values.add(round(productPrice,2));
+				  values.add(round(finalPrice, 2));
 				  dict.put(item, values);
 				//dict.put(item, finalPrice);
 				
@@ -115,17 +111,40 @@ public class SaleGUI {
 	    long generatedLong = leftLimit + (long) (Math.random() * (rightLimit - leftLimit));
 	    return generatedLong;
 	}
-
 	
-	public void completeSale(Map<String, Object> dict) throws IOException {
+public String completeSale(Map<String, Map<String, Object>>receipt, Map<String, Object> dict, String filepath) throws IOException {
 		
-		long receiptId = generateId();
-		FileWriter pw = new FileWriter("database\\completedSale.csv");
+		String Id = Long.toString(generateId());
+		receipt.put(Id, dict);
+		
+		String eol = System.getProperty("line.separator");
+		try (Writer writer = new FileWriter(filepath, true)) {
+		
+		    writer.append(Id)
+		          .append(',')
+		          .append(""+receipt.get(Id))
+		          .append(',')
+		          .append(USER)
+		          .append(',')
+		          .append(""+totalSaleAmount(dict))
+		          .append(',')
+		          .append(LOGINTIME)
+		          .append(',')
+		          .append(REGISTER)
+		          .append(eol);
+		    writer.flush();
+		    writer.close();
+		
+		    
+		}
+		catch (IOException ex) {
+			  ex.printStackTrace(System.err);
+			}
+		    
+		
+		return Id;
 		
 		
-        
-            pw.flush();
-            pw.close();
 	}
 	
 	public double totalSaleAmount(Map<String, Object> dict) {
@@ -171,9 +190,11 @@ public class SaleGUI {
 	 */
 	private void initialize() {
 		//Declaring the values of the required variables
-		final String SOURCE = "database\\Inventory.csv";
+		final String SOURCE = "C:\\Users\\akhil\\Desktop\\POS System\\database\\Inventory.csv";
+		final String COMPLETESALE = "C:\\Users\\akhil\\Desktop\\POS System\\database\\completedSale.csv";
 		
 		Map<String,Object> sale = new HashMap<String, Object>();
+		Map<String,Map<String,Object>> receiptdict = new HashMap<String, Map<String,Object>>();
 		
 		
 		
@@ -186,23 +207,23 @@ public class SaleGUI {
 		
 		JLabel lblNewLabel = new JLabel("Items");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setBounds(33, 190, 90, 60);
+		lblNewLabel.setBounds(33, 36, 90, 60);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JTextArea totalSaleArea = new JTextArea();
 		totalSaleArea.setFont(new Font("Arial", Font.PLAIN, 20));
-		totalSaleArea.setBounds(686, 573, 501, 73);
+		totalSaleArea.setBounds(686, 448, 489, 73);
 		frame.getContentPane().add(totalSaleArea);
 		
 		quantity = new JTextField();
-		quantity.setBounds(448, 275, 160, 60);
+		quantity.setBounds(431, 107, 160, 60);
 		frame.getContentPane().add(quantity);
 		quantity.setColumns(10);
 		
 
 		JTextArea saleArea = new JTextArea();
 		saleArea.setFont(new Font("Arial", Font.PLAIN, 20));
-		saleArea.setBounds(686, 238, 501, 325);
+		saleArea.setBounds(686, 107, 489, 325);
 		frame.getContentPane().add(saleArea);
 		
 		JButton btnTotal = new JButton("Total");
@@ -215,14 +236,14 @@ public class SaleGUI {
 			}
 		});
 		btnTotal.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnTotal.setBounds(860, 656, 160, 60);
+		btnTotal.setBounds(856, 558, 160, 60);
 		frame.getContentPane().add(btnTotal);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		comboBox.addItem("Add Item");
 		comboBox.addItem("Remove Item");
-		comboBox.setBounds(448, 372, 160, 32);
+		comboBox.setBounds(431, 196, 160, 32);
 		frame.getContentPane().add(comboBox);
 		
 		
@@ -263,7 +284,7 @@ public class SaleGUI {
 			}
 		});
 		btnSmartWatch.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnSmartWatch.setBounds(33, 622, 160, 60);
+		btnSmartWatch.setBounds(33, 558, 160, 60);
 		frame.getContentPane().add(btnSmartWatch);
 		
 		JButton btnKeyboard = new JButton("Keyboard");
@@ -303,7 +324,7 @@ public class SaleGUI {
 			}
 		});
 		btnKeyboard.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnKeyboard.setBounds(214, 622, 160, 60);
+		btnKeyboard.setBounds(214, 558, 160, 60);
 		frame.getContentPane().add(btnKeyboard);
 		
 		JButton btnDeodrant = new JButton("Deodrant");
@@ -343,7 +364,7 @@ public class SaleGUI {
 			}
 		});
 		btnDeodrant.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnDeodrant.setBounds(33, 552, 160, 60);
+		btnDeodrant.setBounds(33, 461, 160, 60);
 		frame.getContentPane().add(btnDeodrant);
 		
 		JButton btnJeans = new JButton("Jeans");
@@ -383,7 +404,7 @@ public class SaleGUI {
 			}
 		});
 		btnJeans.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnJeans.setBounds(214, 552, 160, 60);
+		btnJeans.setBounds(214, 461, 160, 60);
 		frame.getContentPane().add(btnJeans);
 		
 		JButton btnHandbag = new JButton("Handbag");
@@ -423,7 +444,7 @@ public class SaleGUI {
 			}
 		});
 		btnHandbag.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnHandbag.setBounds(214, 482, 160, 60);
+		btnHandbag.setBounds(214, 372, 160, 60);
 		frame.getContentPane().add(btnHandbag);
 		
 		JButton btnToaster = new JButton("Toaster");
@@ -463,7 +484,7 @@ public class SaleGUI {
 			}
 		});
 		btnToaster.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnToaster.setBounds(33, 482, 160, 60);
+		btnToaster.setBounds(33, 372, 160, 60);
 		frame.getContentPane().add(btnToaster);
 		
 		JButton btnUmbrella = new JButton("Umbrella");
@@ -503,7 +524,7 @@ public class SaleGUI {
 			}
 		});
 		btnUmbrella.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnUmbrella.setBounds(214, 412, 160, 60);
+		btnUmbrella.setBounds(214, 281, 160, 60);
 		frame.getContentPane().add(btnUmbrella);
 		
 		JButton btnCereals = new JButton("Cereals");
@@ -543,7 +564,7 @@ public class SaleGUI {
 			}
 		});
 		btnCereals.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCereals.setBounds(33, 412, 160, 60);
+		btnCereals.setBounds(33, 281, 160, 60);
 		frame.getContentPane().add(btnCereals);
 		
 		JButton btnShampoo = new JButton("Shampoo");
@@ -584,7 +605,7 @@ public class SaleGUI {
 		});
 		
 		JButton btnRamen = new JButton("Ramen");
-		btnRamen.setBounds(214, 272, 160, 60);
+		btnRamen.setBounds(214, 107, 160, 60);
 		frame.getContentPane().add(btnRamen);
 		btnRamen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -623,7 +644,7 @@ public class SaleGUI {
 		});
 		btnRamen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnShampoo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnShampoo.setBounds(33, 342, 160, 60);
+		btnShampoo.setBounds(33, 196, 160, 60);
 		frame.getContentPane().add(btnShampoo);
 		
 		JButton btnTshirt = new JButton("Tshirt");
@@ -663,7 +684,7 @@ public class SaleGUI {
 			}
 		});
 		btnTshirt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnTshirt.setBounds(214, 342, 160, 60);
+		btnTshirt.setBounds(214, 196, 160, 60);
 		frame.getContentPane().add(btnTshirt);
 		
 		
@@ -704,32 +725,32 @@ public class SaleGUI {
 				
 		});
 		btnHairspray.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnHairspray.setBounds(33, 272, 160, 60);
+		btnHairspray.setBounds(33, 106, 160, 60);
 		frame.getContentPane().add(btnHairspray);
 		
 		JLabel lblQuantity = new JLabel("Quantity");
 		lblQuantity.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblQuantity.setBounds(448, 190, 160, 60);
+		lblQuantity.setBounds(431, 36, 160, 60);
 		frame.getContentPane().add(lblQuantity);
 		
 		JLabel lblProductName = new JLabel("Product Name");
 		lblProductName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblProductName.setBounds(686, 204, 137, 32);
+		lblProductName.setBounds(686, 64, 137, 32);
 		frame.getContentPane().add(lblProductName);
 		
 		JLabel lblQuantity_1 = new JLabel("Quantity");
 		lblQuantity_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblQuantity_1.setBounds(834, 204, 137, 32);
+		lblQuantity_1.setBounds(833, 64, 137, 32);
 		frame.getContentPane().add(lblQuantity_1);
 		
 		JLabel lblPrice = new JLabel("Price");
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPrice.setBounds(958, 204, 137, 32);
+		lblPrice.setBounds(961, 64, 137, 32);
 		frame.getContentPane().add(lblPrice);
 		
 		JLabel lblFinalPrice = new JLabel("Final Price");
 		lblFinalPrice.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblFinalPrice.setBounds(1068, 204, 137, 32);
+		lblFinalPrice.setBounds(1066, 64, 137, 32);
 		frame.getContentPane().add(lblFinalPrice);
 
 		
@@ -740,6 +761,7 @@ public class SaleGUI {
 				Set<String> keysCount = sale.keySet();
 				if(keysCount.size() >= 1) {
 					saleArea.setText(null);
+					totalSaleArea.setText(null);
 				}
 				
 				for (String key : sale.keySet()){
@@ -748,43 +770,69 @@ public class SaleGUI {
 			}
 		});
 		btnRemoveAll.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnRemoveAll.setBounds(686, 656, 160, 60);
+		btnRemoveAll.setBounds(686, 558, 160, 60);
 		frame.getContentPane().add(btnRemoveAll);
 		
+		//Finishing a sale and generating receipt along with the sale details being saved in completedSale.csv
 		JButton btnCompleteSale = new JButton("Complete Sale");
+		btnCompleteSale.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				double PaidAmount = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter Payment Amount:", "Payment", JOptionPane.INFORMATION_MESSAGE));
+				double SaleAmount = totalSaleAmount(sale);
+				Inventory inventory = new Inventory();
+				if(PaidAmount > SaleAmount) {
+				try {
+					String ReceiptId = completeSale(receiptdict, sale, COMPLETESALE);
+					//Updating Value in the inventory
+					for(Object key: sale.keySet()) {
+						List<Object> CompleteValues = (List<Object>) sale.get(key);
+						int SaleCount = (int) CompleteValues.get(0);
+						List<String> product = inventory.productDetails(SOURCE,key.toString());
+						int productCount = Integer.parseInt(product.get(1));
+						inventory.updateProductCount(SOURCE, key.toString(), (productCount - SaleCount));
+						
+					}
+					double returnedAmount = PaidAmount-SaleAmount; 
+					JOptionPane.showMessageDialog(null, "Sale Completed\n"+"Returned Amount: "+round(returnedAmount,2)+"$\n"+"Generated Receipt Id: "+ReceiptId, "Transaction Successfull", JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				sale.clear();
+				receiptdict.clear();
+				saleArea.setText(null);
+				totalSaleArea.setText(null);
+				}
+				else if(PaidAmount == SaleAmount) {
+					try {
+						String ReceiptId = completeSale(receiptdict, sale, COMPLETESALE);
+						//Updating Value in the inventory
+						for(Object key: sale.keySet()) {
+							List<Object> CompleteValues = (List<Object>) sale.get(key);
+							int SaleCount = (int) CompleteValues.get(0);
+							List<String> product = inventory.productDetails(SOURCE,key.toString());
+							int productCount = Integer.parseInt(product.get(1));
+							inventory.updateProductCount(SOURCE, key.toString(), (productCount - SaleCount));
+							
+						}
+					
+						JOptionPane.showMessageDialog(null, "Sale Completed\n"+"Generated Receipt Id: "+ReceiptId, "Transaction Successfull", JOptionPane.INFORMATION_MESSAGE);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					sale.clear();
+					receiptdict.clear();
+					saleArea.setText(null);
+					totalSaleArea.setText(null);
+						
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Insufficient Funds", "Transaction Failed", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnCompleteSale.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCompleteSale.setBounds(1037, 656, 150, 60);
+		btnCompleteSale.setBounds(1025, 558, 150, 60);
 		frame.getContentPane().add(btnCompleteSale);
-		
-		JLabel lblCashierName = new JLabel("Cashier Name:");
-		lblCashierName.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCashierName.setBounds(33, 75, 160, 60);
-		frame.getContentPane().add(lblCashierName);
-		
-		JLabel label = new JLabel(USER);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		label.setBounds(181, 75, 160, 60);
-		frame.getContentPane().add(label);
-		
-		JLabel lblLoginTime = new JLabel("Login Time:");
-		lblLoginTime.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLoginTime.setBounds(448, 75, 160, 60);
-		frame.getContentPane().add(lblLoginTime);
-		
-		JLabel lblLoginTime_1 = new JLabel(LOGINTIME);
-		lblLoginTime_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLoginTime_1.setBounds(559, 75, 264, 60);
-		frame.getContentPane().add(lblLoginTime_1);
-		
-		JLabel lblRegister = new JLabel("Register:");
-		lblRegister.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblRegister.setBounds(916, 75, 90, 60);
-		frame.getContentPane().add(lblRegister);
-		
-		JLabel lblSelectedRegister = new JLabel(REGISTER);
-		lblSelectedRegister.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSelectedRegister.setBounds(1027, 75, 160, 60);
-		frame.getContentPane().add(lblSelectedRegister);
 		
 		
 		
