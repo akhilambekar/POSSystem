@@ -27,31 +27,36 @@ public class Admin_Frame extends JFrame implements ActionListener{
 	private List<Employee> employees;
 	
 	public Admin_Frame(PosSystem system2){
-		setLayout(null);
+		getContentPane().setLayout(null);
 //		Toolkit tk = Toolkit.getDefaultToolkit();
 //		int xSize = ((int) tk.getScreenSize().getWidth());
 //		int ySize = ((int) tk.getScreenSize().getHeight());
 		
 		setSize(800,600);
-		addCashierButton = new JButton("Add Cashier");
-		addCashierButton.setBounds(800*4/5,600/8,100,50);
-		add(addCashierButton);
+		addCashierButton = new JButton("Cashier Report");
+		addCashierButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addCashierButton.setBounds(604,30,147,65);
+		getContentPane().add(addCashierButton);
 		
-		addAdminButton = new JButton("Add Admin");
-		addAdminButton.setBounds(800*4/5,600*2/8,100,50);
-		add(addAdminButton);
+		addAdminButton = new JButton("Register Report");
+		addAdminButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		addAdminButton.setBounds(604,108,147,65);
+		getContentPane().add(addAdminButton);
 		
-		deleteButton = new JButton("Remove Employee");
-		deleteButton.setBounds(800*4/5,600*3/8,100,50);
-		add(deleteButton);
+		deleteButton = new JButton("Inventory Report");
+		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		deleteButton.setBounds(604,183,147,65);
+		getContentPane().add(deleteButton);
 		
-		updateButton = new JButton("Update Employee");
-		updateButton.setBounds(800*4/5,600*4/8,100,50);
-		add(updateButton);
+		updateButton = new JButton("Inventory Check");
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		updateButton.setBounds(604,258,147,65);
+		getContentPane().add(updateButton);
 		
 		logOutButton = new JButton("Log Out");
-		logOutButton.setBounds(800*4/5,600*6/8,100,50);
-		add(logOutButton);
+		logOutButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		logOutButton.setBounds(604,450,147,65);
+		getContentPane().add(logOutButton);
 		
 		textShow=new JTextArea();  
 		textShow.setBackground(Color.white);  
@@ -63,7 +68,12 @@ public class Admin_Frame extends JFrame implements ActionListener{
 		scroll = new JScrollPane (textShow, 
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setBounds(800/16,600/16,3*800/5,4*600/5);  
-		add(scroll);
+		getContentPane().add(scroll);
+		
+		JButton btnRestock = new JButton("Restock");
+		btnRestock.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnRestock.setBounds(604, 333, 147, 65);
+		getContentPane().add(btnRestock);
 		
 		addCashierButton.addActionListener(this);
 		addAdminButton.addActionListener(this);
@@ -83,5 +93,4 @@ public class Admin_Frame extends JFrame implements ActionListener{
 			dispose();
 		}
 	}
-	
 }
