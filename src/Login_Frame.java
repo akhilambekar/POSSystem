@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.awt.Font;
 
 public class Login_Frame extends JFrame implements ActionListener{
 	
@@ -33,29 +35,53 @@ public class Login_Frame extends JFrame implements ActionListener{
 	}
 	
 	public Login_Frame(){
-		setLayout(null);
-		setSize(520,200);
+		setSize(826,499);
 		setLocation(500,280);
 		
-		usernameLabel=new JLabel("username");
-		passwordLabel=new JLabel("password");
-		usernameLabel.setBounds(90,30,150,20);
-		passwordLabel.setBounds(90,65,150,20);
-		add(usernameLabel);
-		add(passwordLabel);
+		usernameLabel=new JLabel("Username:");
+		usernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		usernameLabel.setBounds(510, 130, 101, 21);
+		passwordLabel=new JLabel("Password:");
+		passwordLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		passwordLabel.setBounds(510, 169, 101, 21);
+		getContentPane().setLayout(null);
+		getContentPane().add(usernameLabel);
+		getContentPane().add(passwordLabel);
 		
 		username = new JTextField(15);
+		username.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		username.setBounds(645, 132, 150, 20);
 		password=new JPasswordField(15);
+		password.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		password.setBounds(645, 169, 150, 20);
 		loginButton = new JButton("Login");
+		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		loginButton.setBounds(510, 235, 131, 44);
 		exitButton=new JButton("Exit");
-		username.setBounds(180,30,150,20);
-		password.setBounds(180,65,150,20);
-		loginButton.setBounds(170,100,80,20);
-		loginButton.setBounds(170,100,80,20);
-		add(username);
-		add(password);
-		add(loginButton);
-		add(exitButton);
+		exitButton.setBounds(0, 0, 0, 0);
+		getContentPane().add(username);
+		getContentPane().add(password);
+		getContentPane().add(loginButton);
+		getContentPane().add(exitButton);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\akhil\\Desktop\\POS System\\images\\logo.jpg"));
+		lblNewLabel.setBounds(0, 0, 500, 458);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(123, 169, 161, 182);
+		getContentPane().add(lblNewLabel_1);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCancel.setBounds(664, 235, 131, 44);
+		getContentPane().add(btnCancel);
 		
 		loginButton.addActionListener(this);
 		exitButton.addActionListener(this);
@@ -94,6 +120,4 @@ public class Login_Frame extends JFrame implements ActionListener{
 			
 		}
 	}
-
-	
 }
