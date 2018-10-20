@@ -180,7 +180,7 @@ public class SaleGUI {
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1920, 1080);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.getContentPane().setLayout(null);
 		
