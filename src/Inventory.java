@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -88,7 +89,7 @@ public class Inventory {
 	
 	
 	//Takes the input from file, updates the product count value and writes the same in the file
-	public void updateProductCount(String filePath, int productId, int newCount) throws IOException {
+	public void updateProductCount(String filePath, String productName, int newCount) throws IOException {
 		  BufferedReader reader = null;
 		   List<Inventory> Products = new ArrayList<Inventory>();
 		   String line = "";
@@ -110,7 +111,7 @@ public class Inventory {
 		   }
 		   
 		   for(Inventory u: Products) {
-			   if(u.getproductId() == productId) {
+			   if(Objects.equals(u.productName, new String(productName))) {
 				   u.setproductCount(newCount);
 			   }
 			   reader.close();
