@@ -116,6 +116,16 @@ public class User_Frame {
 		btnReturnSale.setBounds(271, 343, 473, 132);
 		frame.getContentPane().add(btnReturnSale);
 		
+		JButton btnLogOut = new JButton("Log Out");
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+			}
+		});
+		btnLogOut.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnLogOut.setBounds(271, 496, 473, 132);
+		frame.getContentPane().add(btnLogOut);
+		
 		
 		
 		
