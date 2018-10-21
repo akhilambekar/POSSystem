@@ -834,6 +834,36 @@ public String completeSale(Map<String, Map<String, Object>>receipt, Map<String, 
 		btnCompleteSale.setBounds(1025, 558, 150, 60);
 		frame.getContentPane().add(btnCompleteSale);
 		
+		JLabel lblCashierName = new JLabel("Cashier Name:");
+		lblCashierName.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCashierName.setBounds(1185, 116, 137, 32);
+		frame.getContentPane().add(lblCashierName);
+		
+		JLabel lblLogin = new JLabel("Login Time:");
+		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLogin.setBounds(33, 10, 137, 32);
+		frame.getContentPane().add(lblLogin);
+		
+		JLabel lblRegisterDetail = new JLabel("Register Detail:");
+		lblRegisterDetail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblRegisterDetail.setBounds(1185, 177, 164, 32);
+		frame.getContentPane().add(lblRegisterDetail);
+		
+		JLabel lblNewLabel_1 = new JLabel(USER);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(1320, 116, 210, 32);
+		frame.getContentPane().add(lblNewLabel_1);
+		
+		JLabel label = new JLabel(LOGINTIME);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		label.setBounds(147, 10, 283, 32);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel(REGISTER);
+		label_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		label_1.setBounds(1327, 177, 150, 32);
+		frame.getContentPane().add(label_1);
+		
 		
 		
 	}
